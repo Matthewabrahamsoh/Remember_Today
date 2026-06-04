@@ -232,7 +232,7 @@ body{font-family:'Nunito',sans-serif;background:var(--cream);color:var(--text);m
 .mface{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:bold;border:3px solid #d4c4b8;}
 .mfront{background:linear-gradient(135deg,var(--teal),var(--teal-dk));color:#fff;font-size:2rem;}
 .mback{background:#fff;transform:rotateY(180deg);}
-.mback img{width:85%;height:80%;object-fit:cover;border-radius:8px;}
+.mback img{width:82%;height:68%;object-fit:cover;border-radius:8px;margin-bottom:2px;}
 .mback .mlabel{font-size:0.9rem;color:var(--text);font-weight:900;text-align:center;padding:0 4px;}
 .victory-msg{display:none;text-align:center;padding:20px;font-size:1.5rem;font-weight:900;color:var(--teal-dk);animation:slideIn 0.5s ease-out;}
 
@@ -746,7 +746,8 @@ function handleMatchPhotos(e){
   const files = Array.from(e.target.files);
   files.forEach(file => {
     const url = URL.createObjectURL(file);
-    matchCustomPhotos.push({url, label: ''});
+    const num = matchCustomPhotos.length + 1;
+    matchCustomPhotos.push({url, label: 'photo_' + num, num: num});
     renderMatchPreview();
   });
 }
@@ -932,7 +933,7 @@ function startMatch(){
     const c=document.createElement('div');
     c.className='mcard';c.dataset.name=d.label;
     const backContent=d.url
-      ?`<img src="${d.url}" alt="${d.label}">`
+      ?`<img src="${d.url}" alt="photo"><div class="mlabel" style="font-size:0.75rem;color:#999;margin-top:3px">${d.num||''}</div>`
       :`<div style="font-size:2.2rem;margin-bottom:5px">${d.icon}</div><div class="mlabel">${d.label}</div>`;
     c.innerHTML=`<div class="mface mfront">?</div><div class="mface mback">${backContent}</div>`;
     c.addEventListener('click',flipM);
